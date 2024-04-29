@@ -13,14 +13,14 @@ namespace KataTirePressureVariation
 
         public void Check()
         {
-            double psiPressureValue = sensor.PopNextPressurePsiValue();
+            var psiPressureValue = GetSensorValue();
 
             if (psiPressureValue < LowPressureThreshold || HighPressureThreshold < psiPressureValue)
             {
                 if (!IsAlarmOn())
                 {
                     alarmOn = true;
-                    Console.WriteLine("Alarm activated!");
+                    NotifyAlarmState("Alarm activated!");
                 }
             }
             else
@@ -28,9 +28,19 @@ namespace KataTirePressureVariation
                 if (IsAlarmOn())
                 {
                     alarmOn = false;
-                    Console.WriteLine("Alarm deactivated!");
+                    NotifyAlarmState("Alarm deactivated!");
                 }
             }
+        }
+
+        protected virtual double GetSensorValue()
+        {
+            return sensor.PopNextPressurePsiValue();
+        }
+
+        protected virtual void NotifyAlarmState(string messageAlarmState)
+        {
+            Console.WriteLine(messageAlarmState);
         }
 
         private bool IsAlarmOn()

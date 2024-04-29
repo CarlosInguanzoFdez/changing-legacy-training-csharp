@@ -13,7 +13,7 @@ namespace KataTirePressureVariation
             return Offset + pressureTelemetryValue;
         }
 
-        private static double SamplePressure()
+        protected virtual double SamplePressure()
         {
             // placeholder implementation that simulate a real sensor in a real tire
             var basicRandomNumbersGenerator = new Random();
